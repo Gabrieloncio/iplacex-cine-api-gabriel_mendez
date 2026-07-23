@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administración Cine Iplacex</title>
+  <link rel="stylesheet" href="/menu/styles.css">
+  <script src="/menu/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Cine Iplacex</p>
+      <h1>Administración de películas y actores</h1>
+    </div>
+    <a class="secondary-button link-button" href="/">Volver al inicio</a>
+  </header>
+
+  <main class="container">
+    <nav class="tabs" aria-label="Secciones">
+      <button class="tab-button active" data-target="peliculas-panel">
+        Películas
+      </button>
+      <button class="tab-button" data-target="actores-panel">
+        Actores
+      </button>
+    </nav>
+
+    <section id="message" class="message hidden" role="status"></section>
+
+    <section id="peliculas-panel" class="panel active">
+      <div class="section-grid">
+        <article class="card">
+          <div class="card-heading">
+            <div>
+              <p class="eyebrow">Formulario</p>
+              <h2 id="pelicula-form-title">Ingresar película</h2>
+            </div>
+          </div>
+
+          <form id="pelicula-form">
+            <input type="hidden" id="pelicula-id">
+
+            <label for="pelicula-nombre">Nombre</label>
+            <input
+              id="pelicula-nombre"
+              name="nombre"
+              type="text"
+              placeholder="Ejemplo: The Matrix"
+              required
+            >
+
+            <label for="pelicula-generos">Géneros</label>
+            <input
+              id="pelicula-generos"
+              name="generos"
+              type="text"
+              placeholder="Acción, Ciencia ficción"
+              required
+            >
+            <small>Separe los géneros mediante comas.</small>
+
+            <label for="pelicula-anio">Año de estreno</label>
+            <input
+              id="pelicula-anio"
+              name="anioEstreno"
+              type="number"
+              min="1888"
+              max="2100"
+              required
+            >
+
+            <div class="form-actions">
+              <button id="pelicula-submit" class="primary-button" type="submit">
+                Guardar película
+              </button>
+              <button
+                id="pelicula-cancel"
+                class="secondary-button hidden"
+                type="button"
+              >
+                Cancelar edición
+              </button>
+            </div>
+          </form>
+        </article>
+
+        <article class="card">
+          <div class="card-heading">
+            <div>
+              <p class="eyebrow">GET /api/pelicula</p>
+              <h2>Películas registradas</h2>
+            </div>
+            <button id="refresh-peliculas" class="secondary-button" type="button">
+              Actualizar
+            </button>
+          </div>
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Géneros</th>
+                  <th>Año</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="peliculas-table-body">
+                <tr>
+                  <td colspan="4">Cargando películas...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="actores-panel" class="panel">
+      <div class="section-grid">
+        <article class="card">
+          <p class="eyebrow">POST /api/actor</p>
+          <h2>Ingresar actor</h2>
+
+          <form id="actor-form">
+            <label for="actor-nombre">Nombre</label>
+            <input
+              id="actor-nombre"
+              name="nombre"
+              type="text"
+              placeholder="Ejemplo: Keanu Reeves"
+              required
+            >
+
+            <label for="actor-edad">Edad</label>
+            <input
+              id="actor-edad"
+              name="edad"
+              type="number"
+              min="0"
+              max="130"
+              required
+            >
+
+            <label for="actor-retirado">¿Está retirado?</label>
+            <select id="actor-retirado" name="estaRetirado">
+              <option value="false">No</option>
+              <option value="true">Sí</option>
+            </select>
+
+            <label for="actor-premios">Premios</label>
+            <input
+              id="actor-premios"
+              name="premios"
+              type="text"
+              placeholder="Oscar, Globo de Oro"
+            >
+            <small>Separe los premios mediante comas.</small>
+
+            <label for="actor-pelicula">Película asociada</label>
+            <select id="actor-pelicula" name="nombrePelicula" required>
+              <option value="">Seleccione una película</option>
+            </select>
+
+            <button class="primary-button" type="submit">
+              Guardar actor
+            </button>
+          </form>
+        </article>
+
+        <article class="card">
+          <div class="card-heading">
+            <div>
+              <p class="eyebrow">Consultas GET</p>
+              <h2>Actores registrados</h2>
+            </div>
+            <button id="refresh-actores" class="secondary-button" type="button">
+              Actualizar
+            </button>
+          </div>
+
+          <div class="filter-row">
+            <label for="actor-filter-pelicula">Filtrar por película</label>
+            <select id="actor-filter-pelicula">
+              <option value="">Todos los actores</option>
+            </select>
+            <button id="filter-actores" class="secondary-button" type="button">
+              Aplicar filtro
+            </button>
+          </div>
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Edad</th>
+                  <th>Retirado</th>
+                  <th>Premios</th>
+                  <th>Id película</th>
+                  <th>Detalle</th>
+                </tr>
+              </thead>
+              <tbody id="actores-table-body">
+                <tr>
+                  <td colspan="6">Cargando actores...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="card response-card">
+      <div class="card-heading">
+        <div>
+          <p class="eyebrow">Respuesta del servidor</p>
+          <h2>Última operación</h2>
+        </div>
+        <button id="clear-output" class="secondary-button" type="button">
+          Limpiar
+        </button>
+      </div>
+      <pre id="api-output">El resultado de las operaciones aparecerá aquí.</pre>
+    </section>
+  </main>
+</body>
+</html>
